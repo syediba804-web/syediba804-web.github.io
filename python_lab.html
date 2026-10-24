@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Lab | Ibraheem</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+<header class="navbar"><a class="logo" href="{{ url_for('home') }}">IB<span>.</span></a><nav><a href="{{ url_for('home') }}#about">About</a><a href="{{ url_for('home') }}#projects">Projects</a><a href="{{ url_for('python_lab') }}">Python Lab</a></nav></header>
+<main class="lab-page"><a class="back-link" href="{{ url_for('home') }}">← Back to portfolio</a><p class="eyebrow">PYTHON MINI PROJECTS</p><h1>Python <span>Lab.</span></h1><p class="section-intro">These forms send values to Python functions in <code>app.py</code>. They do not run arbitrary code typed by visitors.</p>
+<div class="lab-grid">
+<section class="lab-card"><div class="project-icon">🧮</div><h2>Calculator</h2><p>Choose an operation and enter two numbers.</p>
+<form method="post"><input type="hidden" name="tool" value="calculator"><div class="form-row"><label>First number<input name="a" type="number" step="any" required placeholder="e.g. 20"></label><label>Second number<input name="b" type="number" step="any" required placeholder="e.g. 5"></label></div>
+<label>Operation<select name="op"><option value="+">Addition (+)</option><option value="-">Subtraction (−)</option><option value="*">Multiplication (×)</option><option value="/">Division (÷)</option></select></label><button class="button primary" type="submit">Calculate</button></form></section>
+<section class="lab-card"><div class="project-icon">👋</div><h2>Greeting generator</h2><p>Use a Python string and function to make a greeting.</p><form method="post"><input type="hidden" name="tool" value="greeting"><label>Your name<input name="name" required placeholder="Enter your name"></label><button class="button primary" type="submit">Generate greeting</button></form></section>
+</div>
+{% if result is not none %}<div class="result-box"><p class="eyebrow">PYTHON RESULT</p><h2>{{ result }}</h2></div>{% endif %}
+{% if error %}<div class="notice error">{{ error }}</div>{% endif %}
+<div class="code-explainer"><h2>What Python concepts are used?</h2><ul><li><strong>Variables:</strong> hold values from the form.</li><li><strong>Conditions:</strong> choose which calculation to perform.</li><li><strong>Functions and routes:</strong> run Python when a page is requested.</li><li><strong>Validation:</strong> handles missing or invalid numbers and division by zero.</li></ul></div>
+</main><footer><a class="logo" href="{{ url_for('home') }}">IB<span>.</span></a><p>Keep practising Python, one project at a time.</p></footer></body></html>
