@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux / CLI Notes | Ibraheem Syed</title>
+<meta name="description" content="Linux and command line notes: navigation, files, permissions, text tools, pipes, processes, shell scripting, with quiz and assignments.">
+<link rel="stylesheet" href="notes.css">
+<script>window.PAGE_ID = "linux"; window.QUIZ = [
+ {q:"Which command prints your current directory?", opts:["ls","pwd","cd","whoami"], a:1, why:"pwd = print working directory."},
+ {q:"Which command lists files including hidden ones, in long format?", opts:["ls","ls -a","ls -la","dir"], a:2, why:"-l is long format and -a shows hidden files (names starting with a dot)."},
+ {q:"What does cd .. do?", opts:["Goes to home","Goes up one directory","Lists files","Deletes the folder"], a:1, why:".. means the parent directory."},
+ {q:"Which command creates a new empty folder?", opts:["touch","mkdir","cp","new"], a:1, why:"mkdir makes directories; touch creates empty files."},
+ {q:"What does chmod +x script.sh do?", opts:["Deletes the file","Makes the file executable","Hides the file","Copies the file"], a:1, why:"+x adds execute permission."},
+ {q:"What does the | (pipe) do?", opts:["Saves output to a file","Sends one command's output into another","Runs commands in the background","Comments out a line"], a:1, why:"cat file | grep word sends cat's output into grep."},
+ {q:"Which command searches for text inside files?", opts:["find","grep","locate","cat"], a:1, why:"grep searches contents; find searches for file names and attributes."},
+ {q:"Which operator appends output to a file instead of overwriting?", opts:[">",">>","<","|"], a:1, why:">> appends; > overwrites."},
+ {q:"Which command shows running processes interactively?", opts:["ps","top","kill","jobs"], a:1, why:"top (or htop) shows live processes and resource usage."},
+ {q:"What does sudo do?", opts:["Shuts down the computer","Runs a command with administrator privileges","Switches the shell","Deletes everything"], a:1, why:"sudo = superuser do. Use it carefully."}
+];</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">IB<span>.</span></a>
+  <nav>
+    <a href="index.html">All notes</a>
+    <a href="../index.html#skills">← Back to portfolio</a>
+    <button id="themeBtn" aria-label="Toggle theme">☀</button>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="toc" id="toc"></aside>
+  <main>
+    <div class="hero">
+      <div class="tag">🐧 Skill notes</div>
+      <h1>Linux / CLI: Beginner to Intermediate</h1>
+      <p>Get comfortable in the terminal: move around, manage files, search, chain commands, handle permissions and processes, and write small shell scripts.</p>
+      <div class="pills"><span class="pill">10 topics</span><span class="pill">10-question quiz</span><span class="pill">8 assignments</span></div>
+    </div>
+
+    <section class="topic" id="intro">
+      <h2 data-short="1. Terminal basics">1. Terminal basics <span class="lvl beg">Beginner</span></h2>
+      <p>The <b>terminal</b> lets you control the computer by typing commands. The <b>shell</b> (usually Bash or Zsh) reads and runs them. Linux is the family of operating systems behind most servers, and macOS and Windows (via WSL) offer similar shells.</p>
+      <pre><code>whoami          # your username
+pwd             # where am I? (print working directory)
+date            # current date and time
+clear           # clean the screen (or Ctrl+L)
+man ls          # manual for a command (q to quit)
+ls --help       # quick help</code></pre>
+      <div class="box tip"><b class="t">Time savers</b>Press <b>Tab</b> to auto-complete names, <b>↑</b> for previous commands, <b>Ctrl+C</b> to stop a running command, and <code>history</code> to see past commands.</div>
+      <p>Command anatomy: <code>command -options arguments</code>, e.g. <code>ls -l /home</code>.</p>
+    </section>
+
+    <section class="topic" id="nav">
+      <h2 data-short="2. Navigating">2. Navigating the file system <span class="lvl beg">Beginner</span></h2>
+      <p>Everything starts at the root <code>/</code>. Your home folder is <code>~</code>.</p>
+      <table>
+        <tr><th>Path</th><th>Meaning</th></tr>
+        <tr><td><code>/</code></td><td>root of the whole system</td></tr>
+        <tr><td><code>~</code></td><td>your home directory</td></tr>
+        <tr><td><code>.</code></td><td>current directory</td></tr>
+        <tr><td><code>..</code></td><td>parent directory</td></tr>
+        <tr><td><code>/etc</code>, <code>/var</code>, <code>/usr</code>, <code>/home</code></td><td>config, logs/data, programs, users</td></tr>
+      </table>
+      <pre><code>ls              # list files
+ls -l           # long format (permissions, size, date)
+ls -a           # include hidden files (start with .)
+ls -lh          # human-readable sizes
+cd projects     # go into a folder
+cd ..           # go up one level
+cd ~            # go home (just "cd" works too)
+cd -            # go back to the previous folder
+tree            # show folders as a tree (if installed)</code></pre>
+      <p><b>Absolute</b> paths start with <code>/</code> (<code>/home/ibraheem/notes</code>). <b>Relative</b> paths start from where you are (<code>notes/python</code>).</p>
+    </section>
+
+    <section class="topic" id="files">
+      <h2 data-short="3. Working with files">3. Creating, copying and deleting <span class="lvl beg">Beginner</span></h2>
+      <pre><code>mkdir projects            # new folder
+mkdir -p a/b/c            # create nested folders
+touch notes.txt           # new empty file
+cp notes.txt backup.txt   # copy a file
+cp -r folder folder2      # copy a folder (recursive)
+mv notes.txt docs/        # move
+mv old.txt new.txt        # rename
+rm notes.txt              # delete a file
+rm -r folder              # delete a folder and its contents
+rmdir empty_folder        # delete an empty folder</code></pre>
+      <div class="box warn"><b class="t">No recycle bin!</b><code>rm</code> deletes permanently. Double-check before running it, and never run <code>rm -rf</code> with a path you aren't 100% sure about. Use <code>rm -i</code> to be asked for confirmation.</div>
+      <h3>Viewing files</h3>
+      <pre><code>cat file.txt          # print the whole file
+less file.txt         # scroll through (q to quit)
+head -n 5 file.txt    # first 5 lines
+tail -n 5 file.txt    # last 5 lines
+tail -f app.log       # follow a log live
+wc -l file.txt        # count lines (-w words, -c bytes)
+nano file.txt         # simple text editor (Ctrl+O save, Ctrl+X exit)</code></pre>
+    </section>
+
+    <section class="topic" id="search">
+      <h2 data-short="4. Searching">4. Searching with find and grep <span class="lvl beg">Beginner</span> <span class="lvl int">Intermediate</span></h2>
+      <pre><code>find . -name "*.py"                 # files ending in .py under current folder
+find . -type d -name "node_modules" # folders only
+find . -size +10M                   # files bigger than 10 MB
+
+grep "error" app.log                # lines containing "error"
+grep -i "error" app.log             # ignore case
+grep -n "TODO" *.py                 # show line numbers
+grep -r "def main" .                # search in all files recursively
+grep -v "debug" app.log             # lines NOT containing debug
+grep -c "error" app.log             # count matching lines</code></pre>
+      <p>Wildcards: <code>*</code> matches anything, <code>?</code> one character, <code>[abc]</code> one of a, b, c. Example: <code>ls *.txt</code>.</p>
+    </section>
+
+    <section class="topic" id="pipes">
+      <h2 data-short="5. Pipes & redirection">5. Pipes and redirection <span class="lvl int">Intermediate</span></h2>
+      <p>Small tools become powerful when chained together.</p>
+      <table>
+        <tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr>
+        <tr><td><code>|</code></td><td>send output to next command</td><td><code>ls | wc -l</code></td></tr>
+        <tr><td><code>&gt;</code></td><td>write output to a file (overwrite)</td><td><code>ls &gt; files.txt</code></td></tr>
+        <tr><td><code>&gt;&gt;</code></td><td>append to a file</td><td><code>echo hi &gt;&gt; log.txt</code></td></tr>
+        <tr><td><code>&lt;</code></td><td>read input from a file</td><td><code>sort &lt; names.txt</code></td></tr>
+        <tr><td><code>2&gt;</code></td><td>redirect errors</td><td><code>cmd 2&gt; errors.txt</code></td></tr>
+        <tr><td><code>&amp;&amp;</code></td><td>run next only if previous succeeded</td><td><code>mkdir x &amp;&amp; cd x</code></td></tr>
+      </table>
+      <pre><code>cat names.txt | sort | uniq -c | sort -nr | head -5    # top 5 most frequent lines
+history | grep git                                    # find old git commands
+ls -l | grep ".py" | wc -l                            # how many Python files?
+echo "Hello" &gt; hello.txt                              # create a file with text
+cut -d"," -f1 data.csv | sort -u                      # unique values of first CSV column</code></pre>
+    </section>
+
+    <section class="topic" id="perms">
+      <h2 data-short="6. Permissions">6. Permissions and users <span class="lvl int">Intermediate</span></h2>
+      <p>Run <code>ls -l</code> and you'll see something like:</p>
+      <pre><code>-rwxr-xr--  1 ibraheem staff  1024 Oct 24 notes.sh
+ ↑↑↑↑↑↑↑↑↑
+ │└┬┘└┬┘└┬┘
+ │ │  │  └── others: r-- (read only)
+ │ │  └───── group:  r-x (read, execute)
+ │ └──────── owner:  rwx (read, write, execute)
+ └────────── type: - file, d directory</code></pre>
+      <table>
+        <tr><th>Letter</th><th>Number</th><th>Meaning</th></tr>
+        <tr><td>r</td><td>4</td><td>read</td></tr>
+        <tr><td>w</td><td>2</td><td>write</td></tr>
+        <tr><td>x</td><td>1</td><td>execute</td></tr>
+      </table>
+      <pre><code>chmod +x script.sh        # make executable
+chmod 755 script.sh       # owner rwx (7), group r-x (5), others r-x (5)
+chmod 644 notes.txt       # owner rw-, others read only
+chown user:group file     # change owner (needs sudo)
+sudo apt update           # run as administrator (Debian/Ubuntu)</code></pre>
+      <div class="box warn"><b class="t">Careful with sudo</b>It bypasses safety checks. Only use it when you understand the command.</div>
+    </section>
+
+    <section class="topic" id="process">
+      <h2 data-short="7. Processes">7. Processes and system info <span class="lvl int">Intermediate</span></h2>
+      <pre><code>ps aux                 # list all processes
+top                    # live view (q to quit)
+kill 1234              # ask process 1234 to stop
+kill -9 1234           # force stop
+sleep 60 &amp;             # run in the background
+jobs                   # background jobs
+df -h                  # disk space
+du -sh folder          # size of a folder
+free -h                # memory usage
+uname -a               # system information</code></pre>
+      <p><b>Ctrl+C</b> stops a program, <b>Ctrl+Z</b> pauses it, <code>fg</code> resumes it in the foreground.</p>
+    </section>
+
+    <section class="topic" id="env">
+      <h2 data-short="8. Env & packages">8. Environment variables and packages <span class="lvl int">Intermediate</span></h2>
+      <pre><code>echo $HOME                      # print a variable
+export NAME="Ibraheem"          # set for this session
+echo "Hi $NAME"
+echo $PATH                      # where the shell looks for commands
+which python3                   # where a command lives
+
+# Installing software (Debian/Ubuntu)
+sudo apt update
+sudo apt install git python3-pip
+
+# Python tools
+python3 -m venv venv
+source venv/bin/activate
+pip install requests</code></pre>
+      <p>Aliases save typing: <code>alias ll="ls -lah"</code>. Add it to <code>~/.bashrc</code> (or <code>~/.zshrc</code>) to keep it permanently.</p>
+      <h3>Handy extras</h3>
+      <pre><code>curl https://example.com        # fetch a web page
+wget URL                        # download a file
+tar -czf backup.tar.gz folder   # compress a folder
+tar -xzf backup.tar.gz          # extract
+ssh user@server                 # connect to another machine
+git init &amp;&amp; git add . &amp;&amp; git commit -m "first commit"</code></pre>
+    </section>
+
+    <section class="topic" id="scripts">
+      <h2 data-short="9. Shell scripting">9. Shell scripting basics <span class="lvl int">Intermediate</span></h2>
+      <p>A script is a file of commands. Create <code>hello.sh</code>:</p>
+      <pre><code>#!/bin/bash
+# greet.sh: a small example script
+
+name=${1:-friend}            # first argument, default "friend"
+echo "Hello, $name!"
+
+if [ -d "projects" ]; then
+  echo "projects folder exists"
+else
+  mkdir projects
+  echo "created projects folder"
+fi
+
+for file in *.txt; do
+  echo "Found: $file"
+done
+
+count=$(ls | wc -l)
+echo "This folder has $count items"</code></pre>
+      <pre><code>chmod +x greet.sh
+./greet.sh Ibraheem</code></pre>
+      <h3>Useful test flags</h3>
+      <p><code>-f</code> file exists, <code>-d</code> directory exists, <code>-z</code> string is empty, <code>-eq</code> numbers equal, <code>-lt</code> less than, <code>-gt</code> greater than.</p>
+      <div class="box note"><b class="t">Tip</b>Quote your variables ("$name") so spaces don't break your script, and use <code>set -e</code> to stop on the first error.</div>
+    </section>
+
+    <section class="topic" id="cheat">
+      <h2 data-short="10. Cheat sheet">10. Quick cheat sheet <span class="lvl beg">Beginner</span></h2>
+      <table>
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>Where am I?</td><td><code>pwd</code></td></tr>
+        <tr><td>List files</td><td><code>ls -lah</code></td></tr>
+        <tr><td>Change folder</td><td><code>cd</code></td></tr>
+        <tr><td>Make folder / file</td><td><code>mkdir</code> / <code>touch</code></td></tr>
+        <tr><td>Copy / move / delete</td><td><code>cp</code> / <code>mv</code> / <code>rm</code></td></tr>
+        <tr><td>Read a file</td><td><code>cat</code>, <code>less</code>, <code>head</code>, <code>tail</code></td></tr>
+        <tr><td>Search text / files</td><td><code>grep</code> / <code>find</code></td></tr>
+        <tr><td>Permissions</td><td><code>chmod</code>, <code>chown</code></td></tr>
+        <tr><td>Processes</td><td><code>ps</code>, <code>top</code>, <code>kill</code></td></tr>
+        <tr><td>Help</td><td><code>man</code>, <code>--help</code></td></tr>
+      </table>
+    </section>
+
+    <section class="topic" id="quiz-section">
+      <h2 data-short="Quiz">Quiz time <span class="lvl">10 questions</span></h2>
+      <div id="quiz"></div>
+    </section>
+
+    <section class="topic" id="assignments">
+      <h2 data-short="Assignments">Assignments</h2>
+      <p id="taskCount" style="color:var(--accent)"></p>
+      <label class="task"><input type="checkbox"><div><strong>1. Folder structure</strong><br>Using only the terminal, create <code>practice/python</code>, <code>practice/web</code> and <code>practice/notes</code> in one command.<details><summary>Hint</summary><code>mkdir -p practice/{python,web,notes}</code></details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>2. Files and copies</strong><br>Create three text files, copy them into another folder, rename one and delete one.<details><summary>Hint</summary>touch, cp, mv, rm.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>3. Log detective</strong><br>Create a file with 20 lines of fake log entries (some containing "ERROR"). Count the errors and show only the last 3 of them.<details><summary>Hint</summary><code>grep ERROR log.txt | tail -3</code> and <code>grep -c</code>.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>4. Word frequency</strong><br>Using a pipe, show the 5 most common words in a text file.<details><summary>Hint</summary><code>tr -s ' ' '\n' | sort | uniq -c | sort -nr | head -5</code></details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>5. Permissions lab</strong><br>Create a script, try to run it, fix it with chmod, and set a file so only you can read and write it.<details><summary>Hint</summary>chmod +x, then chmod 600 file.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>6. Backup script</strong><br>Write <code>backup.sh</code> that compresses a folder into a tar.gz file named with today's date.<details><summary>Hint</summary><code>$(date +%F)</code> gives 2026-10-24.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>7. Find big files</strong><br>List the 5 biggest files in your home folder.<details><summary>Hint</summary><code>find ~ -type f -exec du -h {} + | sort -rh | head -5</code></details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>8. Setup script</strong><br>Write a script that takes a project name, creates a folder, a README.md, a Python virtual environment and runs <code>git init</code>.<details><summary>Hint</summary>Use $1 for the name and &amp;&amp; to chain steps.</details></div></label>
+    </section>
+
+    <div class="pager">
+      <a href="css.html">← CSS</a>
+      <a href="mathematics.html">Next: Mathematics →</a>
+    </div>
+  </main>
+</div>
+<footer class="site">© Ibraheem Syed · Linux / CLI notes</footer>
+<script src="notes.js"></script>
+</body>
+</html>

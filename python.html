@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python Notes | Ibraheem Syed</title>
+<meta name="description" content="Python notes from beginner to intermediate with examples, quizzes and assignments.">
+<link rel="stylesheet" href="notes.css">
+<script>window.PAGE_ID = "python"; window.QUIZ = [
+ {q:"What does print(type(3.0)) show?", opts:["<class 'int'>","<class 'float'>","<class 'str'>","<class 'number'>"], a:1, why:"3.0 has a decimal point, so it is a float."},
+ {q:"What is the result of 7 // 2?", opts:["3.5","4","3","1"], a:2, why:"// is floor division: it drops the fractional part. 7 // 2 = 3."},
+ {q:"Which one is a valid variable name?", opts:["2name","my-name","my_name","class"], a:2, why:"Names can't start with a digit, contain hyphens, or be a keyword like class."},
+ {q:"What is the output of 'abc'[1]?", opts:["a","b","c","Error"], a:1, why:"Indexing starts at 0, so index 1 is 'b'."},
+ {q:"Which collection does NOT allow duplicates?", opts:["list","tuple","set","string"], a:2, why:"A set stores unique items only."},
+ {q:"What does range(1, 5) produce?", opts:["1,2,3,4,5","1,2,3,4","0,1,2,3,4","2,3,4"], a:1, why:"range stops BEFORE the end value, so 1 to 4."},
+ {q:"How do you get the value for key 'age' safely, with 0 as default?", opts:["d['age', 0]","d.get('age', 0)","d.age(0)","d.find('age')"], a:1, why:"dict.get(key, default) never raises KeyError."},
+ {q:"What is a list comprehension: [x*x for x in range(3)]?", opts:["[0, 1, 4]","[1, 4, 9]","[0, 1, 2]","[0, 2, 4]"], a:0, why:"x takes 0, 1, 2 and each is squared: 0, 1, 4."},
+ {q:"Which keyword exits a function and sends back a value?", opts:["break","yield only","return","exit"], a:2, why:"return ends the function and hands a value back to the caller."},
+ {q:"Which block always runs, even if an error happened?", opts:["try","except","else","finally"], a:3, why:"finally runs no matter what, which makes it good for cleanup."}
+];</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">IB<span>.</span></a>
+  <nav>
+    <a href="index.html">All notes</a>
+    <a href="../index.html#skills">← Back to portfolio</a>
+    <button id="themeBtn" aria-label="Toggle theme">☀</button>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="toc" id="toc"></aside>
+  <main>
+    <div class="hero">
+      <div class="tag">🐍 Skill notes</div>
+      <h1>Python: Beginner to Intermediate</h1>
+      <p>Everything from your first print() to functions, files, classes and error handling, with examples, a quiz and hands-on assignments.</p>
+      <div class="pills"><span class="pill">12 topics</span><span class="pill">10-question quiz</span><span class="pill">8 assignments</span></div>
+    </div>
+
+    <section class="topic" id="intro">
+      <h2 data-short="1. Getting started">1. Getting started <span class="lvl beg">Beginner</span></h2>
+      <p>Python is a readable, general-purpose language used for web development, data science, automation, AI and more. Python code is executed line by line by the <b>interpreter</b>.</p>
+      <h3>Your first program</h3>
+      <pre><code>print("Hello, world!")
+print("My name is Ibraheem")</code></pre>
+      <div class="out">Hello, world!
+My name is Ibraheem</div>
+      <h3>Comments</h3>
+      <pre><code># This is a comment: Python ignores it
+print("Comments explain your code")  # inline comment</code></pre>
+      <div class="box tip"><b class="t">Tip</b>Install Python from python.org, check it with <code>python --version</code>, and run a file with <code>python myfile.py</code>.</div>
+    </section>
+
+    <section class="topic" id="variables">
+      <h2 data-short="2. Variables & types">2. Variables and data types <span class="lvl beg">Beginner</span></h2>
+      <p>A variable is a name that points to a value. You don't declare a type; Python works it out.</p>
+      <pre><code>name = "Ibraheem"     # str
+age = 20              # int
+height = 5.9          # float
+is_student = True     # bool
+
+print(type(name), type(age), type(height), type(is_student))</code></pre>
+      <table>
+        <tr><th>Type</th><th>Example</th><th>Use</th></tr>
+        <tr><td>int</td><td>42</td><td>whole numbers</td></tr>
+        <tr><td>float</td><td>3.14</td><td>decimals</td></tr>
+        <tr><td>str</td><td>"hello"</td><td>text</td></tr>
+        <tr><td>bool</td><td>True / False</td><td>yes/no logic</td></tr>
+        <tr><td>NoneType</td><td>None</td><td>"nothing here"</td></tr>
+      </table>
+      <h3>Naming rules</h3>
+      <ul>
+        <li>Start with a letter or underscore, never a digit.</li>
+        <li>Use letters, digits and underscores only.</li>
+        <li>Names are case-sensitive: <code>age</code> and <code>Age</code> differ.</li>
+        <li>Style: <code>snake_case</code> for variables and functions.</li>
+      </ul>
+      <h3>Type conversion</h3>
+      <pre><code>x = int("42")        # 42
+y = float("3.5")     # 3.5
+z = str(100)         # "100"
+print(int(7.9))      # 7 (cuts the decimal part)</code></pre>
+    </section>
+
+    <section class="topic" id="operators">
+      <h2 data-short="3. Operators & input">3. Operators, input and output <span class="lvl beg">Beginner</span></h2>
+      <table>
+        <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>
+        <tr><td>+ - *</td><td>add, subtract, multiply</td><td>6 * 7</td><td>42</td></tr>
+        <tr><td>/</td><td>true division</td><td>7 / 2</td><td>3.5</td></tr>
+        <tr><td>//</td><td>floor division</td><td>7 // 2</td><td>3</td></tr>
+        <tr><td>%</td><td>remainder</td><td>7 % 2</td><td>1</td></tr>
+        <tr><td>**</td><td>power</td><td>2 ** 5</td><td>32</td></tr>
+        <tr><td>== != &lt; &gt; &lt;= &gt;=</td><td>comparison</td><td>3 &lt; 5</td><td>True</td></tr>
+        <tr><td>and or not</td><td>logic</td><td>True and False</td><td>False</td></tr>
+      </table>
+      <h3>Reading input</h3>
+      <pre><code>name = input("What is your name? ")
+age = int(input("How old are you? "))
+print(f"Hi {name}, next year you will be {age + 1}.")</code></pre>
+      <div class="box warn"><b class="t">Careful</b><code>input()</code> always returns a string. Convert it with <code>int()</code> or <code>float()</code> before doing maths.</div>
+      <h3>f-strings</h3>
+      <pre><code>pi = 3.14159265
+print(f"Pi is about {pi:.2f}")      # Pi is about 3.14
+print(f"{5 * 4 = }")                # 5 * 4 = 20</code></pre>
+    </section>
+
+    <section class="topic" id="control">
+      <h2 data-short="4. If / else">4. Conditions: if, elif, else <span class="lvl beg">Beginner</span></h2>
+      <p>Python uses <b>indentation</b> (4 spaces) to mark blocks. It is part of the syntax.</p>
+      <pre><code>marks = 78
+if marks &gt;= 90:
+    grade = "A"
+elif marks &gt;= 75:
+    grade = "B"
+elif marks &gt;= 60:
+    grade = "C"
+else:
+    grade = "Needs work"
+print(grade)</code></pre>
+      <div class="out">B</div>
+      <h3>Truthy and falsy</h3>
+      <p>Falsy values: <code>0</code>, <code>0.0</code>, <code>""</code>, <code>[]</code>, <code>{}</code>, <code>set()</code>, <code>None</code>, <code>False</code>. Everything else is truthy.</p>
+      <pre><code>items = []
+if not items:
+    print("The list is empty")</code></pre>
+      <h3>One-line conditional</h3>
+      <pre><code>status = "adult" if age &gt;= 18 else "minor"</code></pre>
+    </section>
+
+    <section class="topic" id="loops">
+      <h2 data-short="5. Loops">5. Loops <span class="lvl beg">Beginner</span></h2>
+      <h3>for loop</h3>
+      <pre><code>for i in range(1, 6):
+    print(i, "squared is", i * i)
+
+for letter in "Python":
+    print(letter)</code></pre>
+      <h3>while loop</h3>
+      <pre><code>count = 3
+while count &gt; 0:
+    print(count)
+    count -= 1
+print("Liftoff!")</code></pre>
+      <h3>break, continue, else</h3>
+      <pre><code>for n in range(1, 10):
+    if n % 2 == 0:
+        continue        # skip even numbers
+    if n &gt; 7:
+        break           # stop the loop completely
+    print(n)</code></pre>
+      <div class="box tip"><b class="t">Tip</b><code>range(start, stop, step)</code> stops <i>before</i> <code>stop</code>. <code>range(10, 0, -2)</code> counts down: 10, 8, 6, 4, 2.</div>
+      <h3>enumerate and zip</h3>
+      <pre><code>fruits = ["apple", "banana", "mango"]
+for i, f in enumerate(fruits, start=1):
+    print(i, f)
+
+names = ["Ali", "Sara"]
+scores = [90, 85]
+for n, s in zip(names, scores):
+    print(n, s)</code></pre>
+    </section>
+
+    <section class="topic" id="strings">
+      <h2 data-short="6. Strings">6. Strings <span class="lvl beg">Beginner</span></h2>
+      <pre><code>s = "Hello, Python"
+print(len(s))          # 13
+print(s[0], s[-1])     # H n
+print(s[0:5])          # Hello  (slicing)
+print(s[::-1])         # nohtyP ,olleH (reversed)</code></pre>
+      <h3>Useful methods</h3>
+      <table>
+        <tr><th>Method</th><th>What it does</th></tr>
+        <tr><td>s.upper() / s.lower()</td><td>change case</td></tr>
+        <tr><td>s.strip()</td><td>remove spaces at both ends</td></tr>
+        <tr><td>s.split(",")</td><td>cut into a list</td></tr>
+        <tr><td>",".join(list)</td><td>join a list into a string</td></tr>
+        <tr><td>s.replace("a","b")</td><td>replace text</td></tr>
+        <tr><td>s.find("x")</td><td>index of first match, or -1</td></tr>
+        <tr><td>s.startswith("He")</td><td>True / False</td></tr>
+      </table>
+      <div class="box note"><b class="t">Remember</b>Strings are <b>immutable</b>: methods return a new string, they never change the original.</div>
+    </section>
+
+    <section class="topic" id="collections">
+      <h2 data-short="7. Lists, tuples, sets, dicts">7. Lists, tuples, sets and dictionaries <span class="lvl beg">Beginner</span></h2>
+      <h3>List: ordered and changeable</h3>
+      <pre><code>nums = [5, 3, 8]
+nums.append(1)         # [5, 3, 8, 1]
+nums.insert(0, 10)     # [10, 5, 3, 8, 1]
+nums.remove(3)         # remove first 3
+last = nums.pop()      # removes and returns 1
+nums.sort()            # sort in place
+print(nums, len(nums), sum(nums), max(nums))</code></pre>
+      <h3>Tuple: ordered, NOT changeable</h3>
+      <pre><code>point = (3, 4)
+x, y = point           # unpacking</code></pre>
+      <h3>Set: unique items, no order</h3>
+      <pre><code>a = {1, 2, 3}
+b = {3, 4}
+print(a | b)   # union        {1, 2, 3, 4}
+print(a &amp; b)   # intersection {3}
+print(a - b)   # difference   {1, 2}</code></pre>
+      <h3>Dictionary: key to value</h3>
+      <pre><code>student = {"name": "Sara", "age": 19}
+student["city"] = "Karachi"
+print(student.get("grade", "N/A"))
+
+for key, value in student.items():
+    print(key, "-&gt;", value)</code></pre>
+      <h3>Slicing and comprehensions</h3>
+      <pre><code>squares = [n * n for n in range(1, 6)]            # [1, 4, 9, 16, 25]
+evens   = [n for n in range(10) if n % 2 == 0]    # [0, 2, 4, 6, 8]
+lengths = {w: len(w) for w in ["hi", "python"]}   # {'hi': 2, 'python': 6}</code></pre>
+    </section>
+
+    <section class="topic" id="functions">
+      <h2 data-short="8. Functions">8. Functions <span class="lvl beg">Beginner</span> <span class="lvl int">Intermediate</span></h2>
+      <pre><code>def greet(name, greeting="Hello"):
+    """Return a greeting message."""
+    return f"{greeting}, {name}!"
+
+print(greet("Ali"))
+print(greet("Sara", greeting="Salam"))</code></pre>
+      <h3>*args and **kwargs</h3>
+      <pre><code>def total(*numbers):
+    return sum(numbers)
+
+def show(**info):
+    for k, v in info.items():
+        print(k, v)
+
+print(total(1, 2, 3, 4))     # 10
+show(name="Ali", age=20)</code></pre>
+      <h3>Scope</h3>
+      <p>Variables created inside a function are <b>local</b>. Prefer passing values in and returning results out instead of using <code>global</code>.</p>
+      <h3>Lambda, map, filter</h3>
+      <pre><code>double = lambda x: x * 2
+print(list(map(double, [1, 2, 3])))              # [2, 4, 6]
+print(list(filter(lambda x: x &gt; 1, [1, 2, 3])))  # [2, 3]
+people = [("Ali", 20), ("Sara", 18)]
+people.sort(key=lambda p: p[1])                  # sort by age</code></pre>
+      <div class="box warn"><b class="t">Classic bug</b>Never use a mutable default like <code>def f(x=[])</code>. It is shared between calls. Use <code>x=None</code> and create the list inside.</div>
+    </section>
+
+    <section class="topic" id="errors">
+      <h2 data-short="9. Errors">9. Error handling <span class="lvl int">Intermediate</span></h2>
+      <pre><code>try:
+    n = int(input("Number: "))
+    print(10 / n)
+except ValueError:
+    print("That was not a number")
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+else:
+    print("No errors!")
+finally:
+    print("Done.")</code></pre>
+      <h3>Raising your own error</h3>
+      <pre><code>def set_age(age):
+    if age &lt; 0:
+        raise ValueError("Age cannot be negative")
+    return age</code></pre>
+    </section>
+
+    <section class="topic" id="files">
+      <h2 data-short="10. Files & modules">10. Files and modules <span class="lvl int">Intermediate</span></h2>
+      <pre><code># Writing and reading text files (with closes the file for you)
+with open("notes.txt", "w") as f:
+    f.write("line one\nline two\n")
+
+with open("notes.txt") as f:
+    for line in f:
+        print(line.strip())</code></pre>
+      <h3>Modules</h3>
+      <pre><code>import math
+import random
+from datetime import date
+
+print(math.sqrt(49))              # 7.0
+print(random.randint(1, 6))       # dice roll
+print(date.today())</code></pre>
+      <h3>JSON</h3>
+      <pre><code>import json
+data = {"name": "Ali", "scores": [90, 85]}
+text = json.dumps(data)           # dict to string
+back = json.loads(text)           # string to dict</code></pre>
+      <div class="box tip"><b class="t">Tip</b>Put your own functions in <code>helpers.py</code> and use <code>from helpers import my_function</code> in another file.</div>
+    </section>
+
+    <section class="topic" id="oop">
+      <h2 data-short="11. Classes (OOP)">11. Classes and objects <span class="lvl int">Intermediate</span></h2>
+      <pre><code>class Student:
+    school = "KU"                      # class attribute
+
+    def __init__(self, name, marks):
+        self.name = name               # instance attributes
+        self.marks = marks
+
+    def average(self):
+        return sum(self.marks) / len(self.marks)
+
+    def __str__(self):
+        return f"{self.name} ({self.average():.1f})"
+
+s = Student("Sara", [90, 80, 85])
+print(s)</code></pre>
+      <div class="out">Sara (85.0)</div>
+      <h3>Inheritance</h3>
+      <pre><code>class Animal:
+    def speak(self):
+        return "..."
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+
+print(Dog().speak())</code></pre>
+      <ul>
+        <li><b>Encapsulation</b>: keep data and behaviour together.</li>
+        <li><b>Inheritance</b>: reuse a parent class.</li>
+        <li><b>Polymorphism</b>: same method name, different behaviour.</li>
+      </ul>
+    </section>
+
+    <section class="topic" id="more">
+      <h2 data-short="12. Handy extras">12. Handy intermediate tools <span class="lvl int">Intermediate</span></h2>
+      <pre><code># Generators produce values one at a time
+def countdown(n):
+    while n &gt; 0:
+        yield n
+        n -= 1
+print(list(countdown(3)))      # [3, 2, 1]
+
+# Counting with collections
+from collections import Counter
+print(Counter("banana"))       # Counter({'a': 3, 'n': 2, 'b': 1})
+
+# Virtual environments and packages (run in terminal)
+# python -m venv venv
+# pip install requests</code></pre>
+      <div class="box note"><b class="t">Style</b>Follow PEP 8: 4-space indents, snake_case names, short readable functions, and docstrings.</div>
+    </section>
+
+    <section class="topic" id="quiz-section">
+      <h2 data-short="Quiz">Quiz time <span class="lvl">10 questions</span></h2>
+      <p>Click an answer. You'll see right away whether it's correct and why.</p>
+      <div id="quiz"></div>
+    </section>
+
+    <section class="topic" id="assignments">
+      <h2 data-short="Assignments">Assignments</h2>
+      <p id="taskCount" style="color:var(--accent)"></p>
+      <label class="task"><input type="checkbox"><div><strong>1. Temperature converter</strong><br>Ask for Celsius and print Fahrenheit (F = C × 9/5 + 32) with 1 decimal.<details><summary>Hint</summary>Use <code>float(input())</code> and an f-string with <code>:.1f</code>.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>2. Even or odd</strong><br>Read a number and print whether it is even or odd.<details><summary>Hint</summary>Use <code>%</code>.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>3. Multiplication table</strong><br>Print the table of any number from 1 to 10.<details><summary>Hint</summary><code>for i in range(1, 11)</code></details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>4. FizzBuzz</strong><br>For 1 to 50 print Fizz for multiples of 3, Buzz for 5, FizzBuzz for both, otherwise the number.<details><summary>Hint</summary>Check "both" (multiple of 15) first.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>5. Palindrome checker</strong><br>Write <code>is_palindrome(text)</code> that ignores case and spaces.<details><summary>Hint</summary>Compare the cleaned text with <code>text[::-1]</code>.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>6. Word counter</strong><br>Take a sentence and print how many times each word appears using a dictionary.<details><summary>Hint</summary><code>counts[w] = counts.get(w, 0) + 1</code></details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>7. Contact book (file)</strong><br>Save names and phone numbers to a file; add a menu to add, list and search.<details><summary>Hint</summary>Use <code>with open(..., "a")</code> to append and a loop for the menu.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>8. Bank account class</strong><br>Make <code>BankAccount</code> with deposit, withdraw and balance; raise an error on overdraft.<details><summary>Hint</summary>Store balance in <code>__init__</code>, raise <code>ValueError</code> in withdraw.</details></div></label>
+    </section>
+
+    <div class="pager">
+      <a href="index.html">← All notes</a>
+      <a href="algorithms.html">Next: Algorithms →</a>
+    </div>
+  </main>
+</div>
+<footer class="site">© Ibraheem Syed · Python notes</footer>
+<script src="notes.js"></script>
+</body>
+</html>

@@ -1,94 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ibraheem | Computer Science Student</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Study Notes | Ibraheem Syed</title>
+<meta name="description" content="Beginner to intermediate study notes with quizzes and assignments: Python, Algorithms, Data Structures, HTML, CSS, Linux and Mathematics.">
+<link rel="stylesheet" href="notes.css">
 </head>
-<script src="notes/skills-links.js" defer></script>
-  <body>
-  <header class="navbar">
-    <a class="logo" href="#home">IB<span>.</span></a>
-    <nav>
-      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a>
-      <a href="{{ url_for('python_lab') }}">Python Lab</a><a href="#contact">Contact</a>
-    </nav>
-  </header>
+<body>
+<div id="progress"></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">IB<span>.</span></a>
+  <nav>
+    <a href="../index.html#skills">← Back to portfolio</a>
+    <button id="themeBtn" aria-label="Toggle theme">☀</button>
+  </nav>
+</header>
 
+<div class="layout" style="grid-template-columns:1fr">
   <main>
-    <section class="hero" id="home">
-      <div class="hero-content">
-        <p class="eyebrow"><span class="dot"></span> COMPUTER SCIENCE STUDENT</p>
-        <h1>Hi, I'm <span>Ibraheem.</span></h1>
-        <p class="intro">A curious student exploring technology — from writing Python code to building useful projects. Always learning, always growing.</p>
-        <div class="actions">
-          <a class="button primary" href="#projects">Explore projects ↘</a>
-          <a class="button secondary" href="#contact">Get in touch</a>
-        </div>
-        <p class="scroll-note">↓ Scroll to explore</p>
-      </div>
-      <div class="hero-art" aria-label="Python programming illustration">
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-        <div class="code-card"><div class="window-dots"><i></i><i></i><i></i></div>
-          <p><span class="pink">def</span> <span class="blue">keep_learning</span>():</p>
-          <p class="indent"><span class="pink">while</span> <span class="green">True</span>:</p>
-          <p class="indent2">build_projects()</p><p class="indent2">solve_problems()</p>
-          <p class="indent2"><span class="pink">return</span> <span class="green">"growth"</span></p>
-          <div class="terminal-line">▶ Running curiosity.exe</div>
-        </div>
-        <div class="floating python">🐍 <span>Python</span></div><div class="floating laptop">💻</div>
-      </div>
-    </section>
+    <div class="hero">
+      <div class="tag">Study notes</div>
+      <h1>My learning notes</h1>
+      <p>Notes I'm writing as I learn, from beginner to intermediate. Every page has examples, a quiz and assignments with saved progress.</p>
+    </div>
 
-    <section class="section about" id="about">
-      <p class="eyebrow">A LITTLE ABOUT ME</p><h2>Curiosity turns into <span>creation.</span></h2>
-      <div class="about-grid">
-        <div class="initials">IB</div>
-        <div><h3>Who I am</h3><p>I'm Ibraheem, a Computer Science student who enjoys problem-solving and learning how technology works. I like experimenting with code, understanding new concepts, and building projects that help me improve.</p>
-          <div class="traits"><span>Problem Solver</span><span>Quick Learner</span><span>CS Student</span><span>Open to Learning</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="skills">
-      <p class="eyebrow">WHAT I'M LEARNING</p><h2>My <span>skills.</span></h2>
-      <div class="skill-grid">
-        {% for skill in skills %}
-        <article class="skill-card"><div class="skill-icon">{{ skill.icon }}</div><h3>{{ skill.name }}</h3><p>{{ skill.level }}</p></article>
-        {% endfor %}
-      </div>
-    </section>
-
-    <section class="section projects" id="projects">
-      <p class="eyebrow">PRACTICE MAKES PROGRESS</p><h2>Learning by <span>building.</span></h2>
-      <p class="section-intro">A collection of projects to practise Python and computer science. Update this list as you finish each project.</p>
-      <div class="project-grid">
-        {% for project in projects %}
-        <article class="project-card"><div class="project-icon">{{ project.icon }}</div><p class="project-tag">{{ project.tag }}</p><h3>{{ project.name }}</h3><p>{{ project.description }}</p></article>
-        {% endfor %}
-      </div>
-    </section>
-
-    <section class="section lab-banner">
-      <div><p class="eyebrow">TRY IT YOURSELF</p><h2>Welcome to the <span>Python Lab.</span></h2><p>Try a small calculator or generate a greeting using a Python function on the server.</p></div>
-      <a class="button primary" href="{{ url_for('python_lab') }}">Open Python Lab ↗</a>
-    </section>
-
-    <section class="section contact" id="contact">
-      <p class="eyebrow">LET'S CONNECT</p><h2>Have a good idea? <span>Say hello.</span></h2>
-      <p class="section-intro">Use this demo contact form. It checks the fields, but sending email needs to be configured separately.</p>
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}{% for category, message in messages %}<div class="notice {{ category }}">{{ message }}</div>{% endfor %}{% endif %}
-      {% endwith %}
-      <form class="contact-form" action="{{ url_for('contact') }}" method="post">
-        <div class="form-row"><label>Your name<input name="name" required placeholder="Enter your name"></label><label>Your email<input name="email" type="email" required placeholder="you@example.com"></label></div>
-        <label>Message<textarea name="message" required rows="4" placeholder="Write your message..."></textarea></label>
-        <button class="button primary" type="submit">Send message ↗</button>
-      </form>
-      <p class="email-note">Replace the demo contact details with your real, public contact links before publishing.</p>
-    </section>
+    <div class="grid">
+      <a class="card" href="python.html"><div class="ico">🐍</div><h3>Python</h3><p>Syntax, data types, loops, functions, files, error handling and classes.</p><div class="meta">12 topics · quiz · 8 assignments</div></a>
+      <a class="card" href="algorithms.html"><div class="ico">⌘</div><h3>Algorithms</h3><p>Big-O, searching, sorting, recursion, greedy, dynamic programming, backtracking.</p><div class="meta">9 topics · quiz · 7 assignments</div></a>
+      <a class="card" href="data-structures.html"><div class="ico">▤</div><h3>Data Structures</h3><p>Lists, linked lists, stacks, queues, hash tables, trees, heaps and graphs.</p><div class="meta">9 topics · quiz · 7 assignments</div></a>
+      <a class="card" href="html.html"><div class="ico">🌐</div><h3>HTML</h3><p>Structure, text, links, images, tables, forms, semantic layout and accessibility.</p><div class="meta">11 topics · quiz · 8 assignments</div></a>
+      <a class="card" href="css.html"><div class="ico">🎨</div><h3>CSS</h3><p>Selectors, box model, Flexbox, Grid, responsive design and animations.</p><div class="meta">11 topics · quiz · 8 assignments</div></a>
+      <a class="card" href="linux.html"><div class="ico">🐧</div><h3>Linux / CLI</h3><p>Navigation, files, search, pipes, permissions, processes and shell scripts.</p><div class="meta">10 topics · quiz · 8 assignments</div></a>
+      <a class="card" href="mathematics.html"><div class="ico">∑</div><h3>Mathematics</h3><p>Algebra, functions, logic, counting, probability, statistics, calculus, vectors.</p><div class="meta">12 topics · quiz · 10 assignments</div></a>
+    </div>
   </main>
-  <footer><a class="logo" href="#home">IB<span>.</span></a><p>Designed and built by Ibraheem · {{ year }}</p><a href="{{ url_for('python_lab') }}">Python Lab ↗</a></footer>
+</div>
+<footer class="site">© Ibraheem Syed · Built with curiosity and code.</footer>
+<script src="notes.js"></script>
 </body>
 </html>

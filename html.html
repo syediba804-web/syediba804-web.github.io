@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML Notes | Ibraheem Syed</title>
+<meta name="description" content="HTML notes from beginner to intermediate: structure, text, links, images, lists, tables, forms, semantic tags, accessibility, with quiz and assignments.">
+<link rel="stylesheet" href="notes.css">
+<script>window.PAGE_ID = "html"; window.QUIZ = [
+ {q:"What does HTML stand for?", opts:["Hyper Text Markup Language","High Tech Modern Language","Hyperlinks and Text Markup Language","Home Tool Markup Language"], a:0, why:"HTML = HyperText Markup Language."},
+ {q:"Which tag creates the largest heading?", opts:["<h6>","<head>","<h1>","<heading>"], a:2, why:"<h1> is the top-level heading; <h6> is the smallest."},
+ {q:"Which attribute gives an image its alternative text?", opts:["title","alt","src","name"], a:1, why:"alt describes the image for screen readers and when it fails to load."},
+ {q:"Which tag makes a hyperlink?", opts:["<link>","<a>","<href>","<url>"], a:1, why:"<a href=\"...\"> creates a link."},
+ {q:"Which is a self-closing (void) element?", opts:["<p>","<div>","<br>","<span>"], a:2, why:"<br>, <img>, <input> and <hr> have no closing tag."},
+ {q:"Which tag is best for the main site navigation?", opts:["<div>","<nav>","<section>","<aside>"], a:1, why:"<nav> is the semantic element for major navigation links."},
+ {q:"How do you create an unordered (bullet) list?", opts:["<ol>","<ul>","<list>","<dl>"], a:1, why:"<ul> holds <li> items shown with bullets; <ol> is numbered."},
+ {q:"Which input type shows a date picker?", opts:["type=\"text\"","type=\"calendar\"","type=\"date\"","type=\"time\""], a:2, why:"type=\"date\" gives a native date picker."},
+ {q:"What does the <label for=\"x\"> need to match?", opts:["The input's name","The input's id","The form's action","The page title"], a:1, why:"for must equal the id of the input it labels."},
+ {q:"Which meta tag helps pages look right on phones?", opts:["charset","description","viewport","keywords"], a:2, why:"The viewport meta tag controls mobile scaling."}
+];</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">IB<span>.</span></a>
+  <nav>
+    <a href="index.html">All notes</a>
+    <a href="../index.html#skills">← Back to portfolio</a>
+    <button id="themeBtn" aria-label="Toggle theme">☀</button>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="toc" id="toc"></aside>
+  <main>
+    <div class="hero">
+      <div class="tag">🌐 Skill notes</div>
+      <h1>HTML: Beginner to Intermediate</h1>
+      <p>Build the structure of web pages: text, links, images, lists, tables, forms and semantic layout, plus accessibility and best practices.</p>
+      <div class="pills"><span class="pill">11 topics</span><span class="pill">10-question quiz</span><span class="pill">8 assignments</span></div>
+    </div>
+
+    <section class="topic" id="intro">
+      <h2 data-short="1. What is HTML?">1. What is HTML? <span class="lvl beg">Beginner</span></h2>
+      <p>HTML (HyperText Markup Language) describes the <b>structure and meaning</b> of a web page. CSS styles it and JavaScript makes it interactive.</p>
+      <h3>Anatomy of an element</h3>
+      <pre><code>&lt;p class="intro"&gt;Hello, world!&lt;/p&gt;
+ ^tag  ^attribute     ^content   ^closing tag</code></pre>
+      <h3>Your first page</h3>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;My First Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello!&lt;/h1&gt;
+  &lt;p&gt;This is my first web page.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      <ul>
+        <li><code>&lt;head&gt;</code> holds information about the page (title, meta, CSS links); it isn't shown.</li>
+        <li><code>&lt;body&gt;</code> holds everything visible.</li>
+        <li>Save as <code>index.html</code> and open it in a browser.</li>
+      </ul>
+    </section>
+
+    <section class="topic" id="text">
+      <h2 data-short="2. Text">2. Headings, paragraphs and text <span class="lvl beg">Beginner</span></h2>
+      <pre><code>&lt;h1&gt;Main title&lt;/h1&gt;
+&lt;h2&gt;Section&lt;/h2&gt;
+&lt;p&gt;A paragraph with &lt;strong&gt;bold&lt;/strong&gt;, &lt;em&gt;italic&lt;/em&gt; and &lt;mark&gt;highlight&lt;/mark&gt;.&lt;/p&gt;
+&lt;p&gt;Line one&lt;br&gt;Line two&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;A quoted passage.&lt;/blockquote&gt;
+&lt;code&gt;print("inline code")&lt;/code&gt;
+&lt;pre&gt;Preformatted
+   text keeps spaces&lt;/pre&gt;</code></pre>
+      <table>
+        <tr><th>Tag</th><th>Meaning</th></tr>
+        <tr><td>&lt;strong&gt;</td><td>important text (bold)</td></tr>
+        <tr><td>&lt;em&gt;</td><td>emphasis (italic)</td></tr>
+        <tr><td>&lt;small&gt;, &lt;sub&gt;, &lt;sup&gt;</td><td>small, subscript, superscript (H<sub>2</sub>O, x<sup>2</sup>)</td></tr>
+        <tr><td>&lt;span&gt;</td><td>generic inline wrapper</td></tr>
+        <tr><td>&lt;div&gt;</td><td>generic block wrapper</td></tr>
+      </table>
+      <div class="box tip"><b class="t">SEO and accessibility</b>Use only one <code>&lt;h1&gt;</code> per page and don't skip heading levels (h1, then h2, then h3).</div>
+      <p>Special characters: <code>&amp;lt;</code> shows &lt;, <code>&amp;amp;</code> shows &amp;, <code>&amp;copy;</code> shows ©.</p>
+    </section>
+
+    <section class="topic" id="links">
+      <h2 data-short="3. Links">3. Links <span class="lvl beg">Beginner</span></h2>
+      <pre><code>&lt;a href="https://github.com"&gt;GitHub&lt;/a&gt;                       &lt;!-- external --&gt;
+&lt;a href="about.html"&gt;About page&lt;/a&gt;                          &lt;!-- same folder --&gt;
+&lt;a href="notes/python.html"&gt;Python notes&lt;/a&gt;                  &lt;!-- subfolder --&gt;
+&lt;a href="#contact"&gt;Jump to contact section&lt;/a&gt;                &lt;!-- same page --&gt;
+&lt;a href="mailto:me@example.com"&gt;Email me&lt;/a&gt;
+&lt;a href="https://example.com" target="_blank" rel="noopener"&gt;New tab&lt;/a&gt;</code></pre>
+      <div class="box note"><b class="t">Paths</b><code>../</code> means "go up one folder". From <code>notes/python.html</code>, the portfolio is <code>../index.html</code>.</div>
+      <div class="box warn"><b class="t">Security</b>Always add <code>rel="noopener"</code> when using <code>target="_blank"</code>.</div>
+    </section>
+
+    <section class="topic" id="images">
+      <h2 data-short="4. Images & media">4. Images and media <span class="lvl beg">Beginner</span></h2>
+      <pre><code>&lt;img src="photo.jpg" alt="Ibraheem at his desk" width="400" loading="lazy"&gt;
+
+&lt;figure&gt;
+  &lt;img src="chart.png" alt="Bar chart of scores"&gt;
+  &lt;figcaption&gt;Figure 1: Test scores&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;video src="intro.mp4" controls width="400"&gt;&lt;/video&gt;
+&lt;audio src="song.mp3" controls&gt;&lt;/audio&gt;</code></pre>
+      <ul>
+        <li>Always write meaningful <code>alt</code> text; use <code>alt=""</code> for purely decorative images.</li>
+        <li>Prefer modern formats like WebP or AVIF and resize big photos before uploading.</li>
+        <li>Responsive images: <code>&lt;img srcset="small.jpg 480w, large.jpg 1200w" sizes="100vw" ...&gt;</code></li>
+      </ul>
+    </section>
+
+    <section class="topic" id="lists">
+      <h2 data-short="5. Lists">5. Lists <span class="lvl beg">Beginner</span></h2>
+      <pre><code>&lt;ul&gt;                       &lt;!-- bullets --&gt;
+  &lt;li&gt;HTML&lt;/li&gt;
+  &lt;li&gt;CSS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol start="1"&gt;                &lt;!-- numbers --&gt;
+  &lt;li&gt;Plan&lt;/li&gt;
+  &lt;li&gt;Build&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;dl&gt;                        &lt;!-- description list --&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;&lt;dd&gt;Structure of a page&lt;/dd&gt;
+  &lt;dt&gt;CSS&lt;/dt&gt;&lt;dd&gt;Style of a page&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+      <p>Lists can be <b>nested</b>: put a new <code>&lt;ul&gt;</code> inside an <code>&lt;li&gt;</code>. Menus are normally built as lists of links.</p>
+    </section>
+
+    <section class="topic" id="tables">
+      <h2 data-short="6. Tables">6. Tables <span class="lvl beg">Beginner</span></h2>
+      <pre><code>&lt;table&gt;
+  &lt;caption&gt;Exam results&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Maths&lt;/th&gt;&lt;th&gt;CS&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Ali&lt;/td&gt;&lt;td&gt;90&lt;/td&gt;&lt;td&gt;85&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Sara&lt;/td&gt;&lt;td&gt;95&lt;/td&gt;&lt;td&gt;92&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td colspan="3"&gt;Updated Oct 2026&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+      <p><code>colspan</code> merges columns and <code>rowspan</code> merges rows. Use tables for <b>data</b>, never for page layout.</p>
+    </section>
+
+    <section class="topic" id="forms">
+      <h2 data-short="7. Forms">7. Forms <span class="lvl beg">Beginner</span> <span class="lvl int">Intermediate</span></h2>
+      <pre><code>&lt;form action="/submit" method="post"&gt;
+  &lt;label for="name"&gt;Name&lt;/label&gt;
+  &lt;input type="text" id="name" name="name" required placeholder="Your name"&gt;
+
+  &lt;label for="email"&gt;Email&lt;/label&gt;
+  &lt;input type="email" id="email" name="email" required&gt;
+
+  &lt;label for="age"&gt;Age&lt;/label&gt;
+  &lt;input type="number" id="age" name="age" min="5" max="100"&gt;
+
+  &lt;label for="pw"&gt;Password&lt;/label&gt;
+  &lt;input type="password" id="pw" name="pw" minlength="8"&gt;
+
+  &lt;fieldset&gt;
+    &lt;legend&gt;Level&lt;/legend&gt;
+    &lt;label&gt;&lt;input type="radio" name="level" value="beg"&gt; Beginner&lt;/label&gt;
+    &lt;label&gt;&lt;input type="radio" name="level" value="int"&gt; Intermediate&lt;/label&gt;
+  &lt;/fieldset&gt;
+
+  &lt;label&gt;&lt;input type="checkbox" name="news"&gt; Send me updates&lt;/label&gt;
+
+  &lt;label for="city"&gt;City&lt;/label&gt;
+  &lt;select id="city" name="city"&gt;
+    &lt;option value="khi"&gt;Karachi&lt;/option&gt;
+    &lt;option value="lhe"&gt;Lahore&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;label for="msg"&gt;Message&lt;/label&gt;
+  &lt;textarea id="msg" name="msg" rows="4"&gt;&lt;/textarea&gt;
+
+  &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      <h3>Useful input types</h3>
+      <p><code>text</code>, <code>email</code>, <code>password</code>, <code>number</code>, <code>date</code>, <code>time</code>, <code>color</code>, <code>range</code>, <code>file</code>, <code>url</code>, <code>tel</code>, <code>search</code>, <code>checkbox</code>, <code>radio</code>, <code>hidden</code>.</p>
+      <h3>Built-in validation</h3>
+      <p><code>required</code>, <code>minlength</code>, <code>maxlength</code>, <code>min</code>, <code>max</code>, <code>pattern="[A-Za-z]+"</code>. The browser blocks submission and shows a message.</p>
+      <div class="box tip"><b class="t">Accessibility</b>Every input needs a <code>&lt;label&gt;</code> whose <code>for</code> matches the input's <code>id</code>. Clicking the label then focuses the field.</div>
+      <div class="demo">
+        <b>Try it:</b> a live form (nothing is sent).<br><br>
+        <form onsubmit="event.preventDefault(); this.querySelector('output').textContent='Thanks, ' + this.elements.n.value + '!';">
+          <label for="demo-n">Your name </label>
+          <input id="demo-n" name="n" required style="padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text)">
+          <button class="btn" style="margin:0 0 0 8px">Say hi</button>
+          <output style="margin-left:10px;color:var(--accent)"></output>
+        </form>
+      </div>
+    </section>
+
+    <section class="topic" id="semantic">
+      <h2 data-short="8. Semantic layout">8. Semantic layout <span class="lvl int">Intermediate</span></h2>
+      <p>Semantic tags tell browsers, search engines and screen readers what each part <i>means</i>, which is better than a pile of <code>&lt;div&gt;</code>s.</p>
+      <pre><code>&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;My Portfolio&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;a href="#about"&gt;About&lt;/a&gt;
+      &lt;a href="#projects"&gt;Projects&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section id="about"&gt;
+      &lt;h2&gt;About&lt;/h2&gt;
+      &lt;p&gt;...&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;article&gt;
+      &lt;h2&gt;Blog post&lt;/h2&gt;
+      &lt;p&gt;...&lt;/p&gt;
+    &lt;/article&gt;
+
+    &lt;aside&gt;Related links&lt;/aside&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;&amp;copy; 2026 Ibraheem&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+      <table>
+        <tr><th>Tag</th><th>Use</th></tr>
+        <tr><td>&lt;header&gt;</td><td>intro or top of page/section</td></tr>
+        <tr><td>&lt;nav&gt;</td><td>main navigation</td></tr>
+        <tr><td>&lt;main&gt;</td><td>the page's main content (once per page)</td></tr>
+        <tr><td>&lt;section&gt;</td><td>a themed group, usually with a heading</td></tr>
+        <tr><td>&lt;article&gt;</td><td>self-contained piece (post, card)</td></tr>
+        <tr><td>&lt;aside&gt;</td><td>side content</td></tr>
+        <tr><td>&lt;footer&gt;</td><td>bottom of page/section</td></tr>
+      </table>
+    </section>
+
+    <section class="topic" id="attrs">
+      <h2 data-short="9. Attributes & IDs">9. Attributes, id and class <span class="lvl beg">Beginner</span> <span class="lvl int">Intermediate</span></h2>
+      <ul>
+        <li><code>id</code>: a <b>unique</b> name for one element (used for CSS, links and JS).</li>
+        <li><code>class</code>: a reusable label; many elements can share it, and one element can have several.</li>
+        <li><code>style</code>: inline CSS (avoid; prefer a stylesheet).</li>
+        <li><code>data-*</code>: your own data, e.g. <code>data-level="beginner"</code>.</li>
+        <li><code>title</code>: tooltip text; <code>hidden</code>: hides an element.</li>
+      </ul>
+      <pre><code>&lt;div id="hero" class="card featured" data-level="beginner"&gt;...&lt;/div&gt;</code></pre>
+      <h3>Connecting CSS and JavaScript</h3>
+      <pre><code>&lt;head&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ...
+  &lt;script src="app.js" defer&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+    </section>
+
+    <section class="topic" id="a11y">
+      <h2 data-short="10. Accessibility & SEO">10. Accessibility and SEO basics <span class="lvl int">Intermediate</span></h2>
+      <ul>
+        <li>Write meaningful <code>alt</code> text and link text ("Read the Python notes", not "click here").</li>
+        <li>Use semantic tags and a logical heading order.</li>
+        <li>Make sure everything works with the keyboard (Tab, Enter, Space).</li>
+        <li>Keep good colour contrast.</li>
+        <li>Set <code>&lt;html lang="en"&gt;</code>, a unique <code>&lt;title&gt;</code> and a <code>&lt;meta name="description"&gt;</code>.</li>
+        <li>ARIA is a last resort: <code>aria-label="Close menu"</code> on an icon-only button, for example.</li>
+      </ul>
+      <pre><code>&lt;button aria-label="Close menu"&gt;✕&lt;/button&gt;
+&lt;a href="#main" class="skip"&gt;Skip to content&lt;/a&gt;</code></pre>
+    </section>
+
+    <section class="topic" id="more">
+      <h2 data-short="11. Other useful tags">11. Other useful elements <span class="lvl int">Intermediate</span></h2>
+      <pre><code>&lt;details&gt;
+  &lt;summary&gt;Click to expand&lt;/summary&gt;
+  Hidden content appears here.
+&lt;/details&gt;
+
+&lt;progress value="70" max="100"&gt;70%&lt;/progress&gt;
+&lt;meter value="0.6"&gt;60%&lt;/meter&gt;
+
+&lt;iframe src="https://example.com" title="Example" width="400" height="250"&gt;&lt;/iframe&gt;
+
+&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;
+&lt;time datetime="2026-10-24"&gt;24 Oct 2026&lt;/time&gt;</code></pre>
+      <div class="demo">
+        <details><summary>Click to expand (live demo of &lt;details&gt;)</summary>No JavaScript needed for this!</details>
+        <p style="margin:10px 0 0">Progress: <progress value="70" max="100">70%</progress></p>
+      </div>
+      <h3>Validate your HTML</h3>
+      <p>Paste your page into the W3C validator (validator.w3.org) to catch missing closing tags and other mistakes.</p>
+    </section>
+
+    <section class="topic" id="quiz-section">
+      <h2 data-short="Quiz">Quiz time <span class="lvl">10 questions</span></h2>
+      <div id="quiz"></div>
+    </section>
+
+    <section class="topic" id="assignments">
+      <h2 data-short="Assignments">Assignments</h2>
+      <p id="taskCount" style="color:var(--accent)"></p>
+      <label class="task"><input type="checkbox"><div><strong>1. About me page</strong><br>Create <code>about.html</code> with a heading, a paragraph about you, a photo with alt text and a list of 5 hobbies.<details><summary>Hint</summary>h1, p, img, ul with li.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>2. Favourites with links</strong><br>Add an ordered list of your top 3 websites, each linking in a new tab securely.<details><summary>Hint</summary>ol, li, a with target and rel.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>3. Timetable</strong><br>Build a weekly class timetable using a table with thead, tbody and at least one merged cell.<details><summary>Hint</summary>colspan or rowspan on a td.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>4. Registration form</strong><br>Make a form with name, email, password, date of birth, a radio group, a dropdown, a checkbox and a textarea, all with labels and validation.<details><summary>Hint</summary>required, type="email", minlength.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>5. Semantic blog layout</strong><br>Create a page using header, nav, main, two articles, an aside and a footer, with no unnecessary divs.<details><summary>Hint</summary>Use the tag table above.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>6. Multi-page mini site</strong><br>Create three linked pages (Home, About, Contact) that share the same navigation.<details><summary>Hint</summary>Copy the nav into each page and use relative links.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>7. FAQ section</strong><br>Build a 5-question FAQ using only the details and summary elements.<details><summary>Hint</summary>No JavaScript required.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>8. Validate and fix</strong><br>Run your pages through the W3C validator and fix every error.<details><summary>Hint</summary>Most errors are unclosed tags or missing alt text.</details></div></label>
+    </section>
+
+    <div class="pager">
+      <a href="data-structures.html">← Data Structures</a>
+      <a href="css.html">Next: CSS →</a>
+    </div>
+  </main>
+</div>
+<footer class="site">© Ibraheem Syed · HTML notes</footer>
+<script src="notes.js"></script>
+</body>
+</html>

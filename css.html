@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Notes | Ibraheem Syed</title>
+<meta name="description" content="CSS notes from beginner to intermediate: selectors, box model, colors, flexbox, grid, responsive design, transitions, with quiz and assignments.">
+<link rel="stylesheet" href="notes.css">
+<style>
+  .d-box{display:inline-block;padding:12px 18px;margin:4px;border-radius:10px;color:#04121a;font-weight:700}
+  .d-flex{display:flex;gap:8px;padding:10px;border:1px dashed var(--line);border-radius:10px}
+  .d-flex>div{padding:12px 18px;background:var(--accent-2);color:#fff;border-radius:8px}
+  .d-flex.center{justify-content:center;align-items:center;height:90px}
+  .d-flex.between{justify-content:space-between}
+  .d-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .d-grid>div{padding:16px;background:var(--accent);color:#04121a;text-align:center;border-radius:8px;font-weight:700}
+  .d-hover{display:inline-block;padding:10px 20px;border-radius:10px;background:var(--accent-2);color:#fff;transition:transform .25s, background .25s;cursor:pointer}
+  .d-hover:hover{transform:translateY(-5px) scale(1.06);background:var(--accent);color:#04121a}
+</style>
+<script>window.PAGE_ID = "css"; window.QUIZ = [
+ {q:"Which CSS property changes the text color?", opts:["font-color","text-color","color","foreground"], a:2, why:"The color property sets text color; background-color sets the background."},
+ {q:"In the box model, which is the OUTERMOST layer?", opts:["padding","border","content","margin"], a:3, why:"From inside out: content, padding, border, margin."},
+ {q:"What does box-sizing: border-box do?", opts:["Adds a border","Includes padding and border in the width","Removes margins","Makes a box round"], a:1, why:"With border-box, width includes padding and border, which makes sizing predictable."},
+ {q:"Which selector targets an element with class='card'?", opts:["#card",".card","card","*card"], a:1, why:".name selects by class; #name selects by id."},
+ {q:"Which has the HIGHEST specificity?", opts:["p","p.note",".note","#note"], a:3, why:"id selectors beat class selectors, which beat element selectors (inline styles beat all)."},
+ {q:"Which property turns a container into a flexbox?", opts:["flex: 1","display: flex","position: flex","align: flex"], a:1, why:"display: flex on the parent makes its children flex items."},
+ {q:"In a row flexbox, which property centers items horizontally?", opts:["align-items","justify-content","text-align","flex-wrap"], a:1, why:"justify-content works along the main axis (horizontal in a row); align-items works on the cross axis."},
+ {q:"Which unit is relative to the root font size?", opts:["px","em","rem","%"], a:2, why:"rem is relative to the html element's font size."},
+ {q:"What makes a layout adapt to screen size?", opts:["@media queries","!important","z-index","float"], a:0, why:"Media queries apply styles depending on viewport size."},
+ {q:"Which pseudo-class styles an element when the mouse is over it?", opts:[":active",":focus",":hover",":visited"], a:2, why:":hover applies while the pointer is over the element."}
+];</script>
+</head>
+<body>
+<div id="progress"></div>
+<header class="topbar">
+  <a class="brand" href="../index.html">IB<span>.</span></a>
+  <nav>
+    <a href="index.html">All notes</a>
+    <a href="../index.html#skills">← Back to portfolio</a>
+    <button id="themeBtn" aria-label="Toggle theme">☀</button>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="toc" id="toc"></aside>
+  <main>
+    <div class="hero">
+      <div class="tag">🎨 Skill notes</div>
+      <h1>CSS: Beginner to Intermediate</h1>
+      <p>Style your pages: selectors, the box model, colors, typography, Flexbox, Grid, responsive design and animations, with live demos.</p>
+      <div class="pills"><span class="pill">11 topics</span><span class="pill">10-question quiz</span><span class="pill">8 assignments</span></div>
+    </div>
+
+    <section class="topic" id="intro">
+      <h2 data-short="1. What is CSS?">1. What is CSS? <span class="lvl beg">Beginner</span></h2>
+      <p>CSS (Cascading Style Sheets) controls how HTML looks: colors, fonts, spacing and layout.</p>
+      <pre><code>selector {
+  property: value;
+  another-property: value;
+}
+
+h1 {
+  color: teal;
+  font-size: 2rem;
+}</code></pre>
+      <h3>Three ways to add CSS</h3>
+      <pre><code>&lt;!-- 1. External file (best) --&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;
+
+&lt;!-- 2. Internal --&gt;
+&lt;style&gt; p { color: gray; } &lt;/style&gt;
+
+&lt;!-- 3. Inline (avoid) --&gt;
+&lt;p style="color: red;"&gt;Hi&lt;/p&gt;</code></pre>
+      <p>Comments in CSS: <code>/* like this */</code></p>
+    </section>
+
+    <section class="topic" id="selectors">
+      <h2 data-short="2. Selectors">2. Selectors <span class="lvl beg">Beginner</span></h2>
+      <table>
+        <tr><th>Selector</th><th>Selects</th></tr>
+        <tr><td><code>p</code></td><td>all paragraphs</td></tr>
+        <tr><td><code>.card</code></td><td>elements with class="card"</td></tr>
+        <tr><td><code>#hero</code></td><td>the element with id="hero"</td></tr>
+        <tr><td><code>*</code></td><td>everything</td></tr>
+        <tr><td><code>div p</code></td><td>p anywhere inside a div</td></tr>
+        <tr><td><code>div &gt; p</code></td><td>p that is a direct child of div</td></tr>
+        <tr><td><code>h1 + p</code></td><td>the p right after an h1</td></tr>
+        <tr><td><code>a, button</code></td><td>both a and button</td></tr>
+        <tr><td><code>input[type="email"]</code></td><td>attribute selector</td></tr>
+        <tr><td><code>a:hover</code></td><td>pseudo-class (state)</td></tr>
+        <tr><td><code>li:first-child</code>, <code>li:nth-child(2n)</code></td><td>position-based</td></tr>
+        <tr><td><code>p::first-line</code>, <code>.x::before</code></td><td>pseudo-elements</td></tr>
+      </table>
+      <h3>Specificity and the cascade</h3>
+      <p>When rules conflict, the more <b>specific</b> selector wins: inline style, then #id, then .class, then element. If equal, the <b>later</b> rule wins. Avoid <code>!important</code>.</p>
+      <h3>Inheritance</h3>
+      <p>Text properties like <code>color</code> and <code>font-family</code> pass down to children; box properties like <code>margin</code> do not.</p>
+    </section>
+
+    <section class="topic" id="colors">
+      <h2 data-short="3. Colors & backgrounds">3. Colors and backgrounds <span class="lvl beg">Beginner</span></h2>
+      <pre><code>color: red;                       /* name */
+color: #1e90ff;                   /* hex */
+color: rgb(30, 144, 255);         /* RGB */
+color: hsl(210, 100%, 56%);       /* hue, saturation, lightness */
+color: rgba(0, 0, 0, 0.5);        /* with transparency */
+
+background-color: #f0f4ff;
+background-image: url("bg.jpg");
+background-size: cover;
+background: linear-gradient(135deg, #6ee7d8, #8b9cff);</code></pre>
+      <div class="demo">
+        <span class="d-box" style="background:#6ee7d8">teal</span>
+        <span class="d-box" style="background:#8b9cff">violet</span>
+        <span class="d-box" style="background:linear-gradient(135deg,#6ee7d8,#8b9cff)">gradient</span>
+      </div>
+      <h3>CSS variables</h3>
+      <pre><code>:root {
+  --accent: #6ee7d8;
+  --radius: 12px;
+}
+.button {
+  background: var(--accent);
+  border-radius: var(--radius);
+}</code></pre>
+    </section>
+
+    <section class="topic" id="text">
+      <h2 data-short="4. Typography">4. Typography <span class="lvl beg">Beginner</span></h2>
+      <pre><code>body {
+  font-family: "Inter", Arial, sans-serif;  /* fallback list */
+  font-size: 16px;
+  font-weight: 400;       /* 700 = bold */
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  text-align: left;       /* center, right, justify */
+  text-transform: uppercase;
+  text-decoration: none;  /* removes link underline */
+}</code></pre>
+      <h3>Units</h3>
+      <table>
+        <tr><th>Unit</th><th>Meaning</th></tr>
+        <tr><td>px</td><td>fixed pixels</td></tr>
+        <tr><td>%</td><td>percent of the parent</td></tr>
+        <tr><td>em</td><td>relative to the parent's font size</td></tr>
+        <tr><td>rem</td><td>relative to the root font size (great for accessibility)</td></tr>
+        <tr><td>vw / vh</td><td>1% of viewport width / height</td></tr>
+        <tr><td>fr</td><td>fraction of free space in Grid</td></tr>
+      </table>
+      <p>Free fonts: add Google Fonts with a <code>&lt;link&gt;</code> in the head, then use the name in <code>font-family</code>.</p>
+    </section>
+
+    <section class="topic" id="boxmodel">
+      <h2 data-short="5. Box model">5. The box model <span class="lvl beg">Beginner</span></h2>
+      <p>Every element is a box: <b>content → padding → border → margin</b> (inside out).</p>
+      <pre><code>* { box-sizing: border-box; }   /* put this at the top of every project */
+
+.card {
+  width: 300px;
+  padding: 20px;               /* space inside */
+  border: 2px solid #8b9cff;
+  margin: 16px auto;           /* space outside; auto centers a block */
+  border-radius: 12px;
+}
+
+/* Shorthand: top right bottom left (clockwise) */
+margin: 10px 20px 10px 20px;
+padding: 10px 20px;            /* vertical horizontal */</code></pre>
+      <div class="box warn"><b class="t">Margin collapse</b>Vertical margins between blocks can merge into the larger one instead of adding up.</div>
+      <h3>Display</h3>
+      <ul>
+        <li><code>block</code>: full width, starts a new line (div, p, h1)</li>
+        <li><code>inline</code>: flows with text; width/height ignored (span, a)</li>
+        <li><code>inline-block</code>: flows inline but accepts width/height</li>
+        <li><code>none</code>: removed from the page</li>
+      </ul>
+    </section>
+
+    <section class="topic" id="position">
+      <h2 data-short="6. Position">6. Position and overflow <span class="lvl int">Intermediate</span></h2>
+      <pre><code>.box { position: static; }     /* default */
+.nudge { position: relative; top: 10px; left: 20px; }
+.badge { position: absolute; top: 0; right: 0; }   /* relative to nearest positioned ancestor */
+.navbar { position: fixed; top: 0; width: 100%; }  /* stays on screen */
+.sticky { position: sticky; top: 0; }              /* sticks when scrolling */
+
+.layer { z-index: 10; }                  /* stacking order */
+.scroll { overflow: auto; max-height: 200px; }</code></pre>
+      <div class="box tip"><b class="t">Pattern</b>Put <code>position: relative</code> on a parent and <code>position: absolute</code> on a child to pin the child inside the parent (badges, close buttons).</div>
+    </section>
+
+    <section class="topic" id="flex">
+      <h2 data-short="7. Flexbox">7. Flexbox <span class="lvl beg">Beginner</span> <span class="lvl int">Intermediate</span></h2>
+      <p>Flexbox lays items out in a <b>row or column</b> and handles alignment and spacing easily.</p>
+      <pre><code>.container {
+  display: flex;
+  flex-direction: row;           /* or column */
+  justify-content: space-between; /* main axis: flex-start, center, flex-end, space-around */
+  align-items: center;            /* cross axis: stretch, flex-start, flex-end */
+  gap: 16px;
+  flex-wrap: wrap;                /* allow wrapping onto new lines */
+}
+.item { flex: 1; }                /* share extra space equally */</code></pre>
+      <div class="demo"><b>Centered:</b>
+        <div class="d-flex center"><div>A</div><div>B</div><div>C</div></div><br>
+        <b>space-between:</b>
+        <div class="d-flex between"><div>A</div><div>B</div><div>C</div></div>
+      </div>
+      <h3>Perfect centering</h3>
+      <pre><code>.center { display: flex; justify-content: center; align-items: center; min-height: 100vh; }</code></pre>
+      <h3>A typical navbar</h3>
+      <pre><code>nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; }
+nav ul { display: flex; gap: 20px; list-style: none; }</code></pre>
+    </section>
+
+    <section class="topic" id="grid">
+      <h2 data-short="8. Grid">8. CSS Grid <span class="lvl int">Intermediate</span></h2>
+      <p>Grid lays out in <b>rows and columns</b> at the same time, which is ideal for page layouts and card galleries.</p>
+      <pre><code>.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);   /* three equal columns */
+  gap: 16px;
+}
+
+/* Auto-responsive cards, no media query needed */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.wide { grid-column: span 2; }</code></pre>
+      <div class="demo"><div class="d-grid"><div>1</div><div>2</div><div>3</div><div style="grid-column:span 2">4 (spans 2)</div><div>5</div></div></div>
+      <div class="box note"><b class="t">Flex vs Grid</b>Use Flexbox for one-dimensional layouts (a row of buttons). Use Grid for two-dimensional layouts (a full page or a gallery).</div>
+    </section>
+
+    <section class="topic" id="responsive">
+      <h2 data-short="9. Responsive design">9. Responsive design <span class="lvl int">Intermediate</span></h2>
+      <p>Make pages work on phones, tablets and desktops. Start with this in your HTML head:</p>
+      <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+      <h3>Media queries</h3>
+      <pre><code>/* Mobile-first: base styles are for phones */
+.layout { display: grid; gap: 16px; }
+
+@media (min-width: 768px) {          /* tablets and up */
+  .layout { grid-template-columns: 1fr 2fr; }
+}
+@media (min-width: 1100px) {         /* desktops */
+  .layout { max-width: 1100px; margin: 0 auto; }
+}</code></pre>
+      <h3>Flexible media</h3>
+      <pre><code>img { max-width: 100%; height: auto; }
+h1 { font-size: clamp(1.8rem, 4vw, 3rem); }   /* min, ideal, max */</code></pre>
+      <div class="box tip"><b class="t">Test it</b>Open browser DevTools (F12) and click the device toolbar icon to preview different screen sizes.</div>
+    </section>
+
+    <section class="topic" id="effects">
+      <h2 data-short="10. Transitions & animation">10. Transitions, transforms and animations <span class="lvl int">Intermediate</span></h2>
+      <pre><code>.button {
+  background: #8b9cff;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+.button:hover {
+  transform: translateY(-5px) scale(1.06);
+  background: #6ee7d8;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+.dot { animation: pulse 1.5s ease-in-out infinite; }</code></pre>
+      <div class="demo">Hover over this: <span class="d-hover">Hover me</span></div>
+      <pre><code>box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+opacity: 0.8;
+filter: blur(2px);
+transform: rotate(10deg);</code></pre>
+      <div class="box warn"><b class="t">Accessibility</b>Respect users who dislike motion: <code>@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }</code></div>
+    </section>
+
+    <section class="topic" id="best">
+      <h2 data-short="11. Best practices">11. Dark mode and best practices <span class="lvl int">Intermediate</span></h2>
+      <pre><code>:root { --bg: #ffffff; --text: #111111; }
+
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0b0f1a; --text: #e8ecf8; }
+}
+
+body { background: var(--bg); color: var(--text); }</code></pre>
+      <ul>
+        <li>Reset: <code>* { box-sizing: border-box; margin: 0; }</code></li>
+        <li>Name classes by <i>what they are</i> (<code>.card</code>), not how they look (<code>.red-big</code>).</li>
+        <li>Keep selectors short; avoid <code>!important</code> and deep nesting.</li>
+        <li>Use variables for colors and spacing so your design stays consistent.</li>
+        <li>Check contrast: text should be easy to read against its background.</li>
+      </ul>
+    </section>
+
+    <section class="topic" id="quiz-section">
+      <h2 data-short="Quiz">Quiz time <span class="lvl">10 questions</span></h2>
+      <div id="quiz"></div>
+    </section>
+
+    <section class="topic" id="assignments">
+      <h2 data-short="Assignments">Assignments</h2>
+      <p id="taskCount" style="color:var(--accent)"></p>
+      <label class="task"><input type="checkbox"><div><strong>1. Style your HTML</strong><br>Take your About page from the HTML notes and give it a custom font, color palette and spacing in an external stylesheet.<details><summary>Hint</summary>Link <code>style.css</code> in the head; start with variables on :root.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>2. Profile card</strong><br>Build a centered card with a photo, name, bio, rounded corners and a soft shadow.<details><summary>Hint</summary>border-radius, box-shadow, margin: auto, max-width.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>3. Button set</strong><br>Create primary, secondary and danger buttons with hover and focus states.<details><summary>Hint</summary>Use a shared .btn class plus modifier classes.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>4. Navbar</strong><br>Make a horizontal navigation bar with Flexbox: logo left, links right, hover underline effect.<details><summary>Hint</summary>justify-content: space-between.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>5. Card gallery</strong><br>Build a gallery of 6 cards using Grid with auto-fit so it adapts without media queries.<details><summary>Hint</summary>repeat(auto-fit, minmax(240px, 1fr)).</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>6. Responsive landing page</strong><br>Create a landing page (hero, features, footer) that looks good at 360px, 768px and 1200px.<details><summary>Hint</summary>Mobile-first, then @media (min-width: ...).</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>7. Dark mode toggle</strong><br>Add light and dark themes using CSS variables and prefers-color-scheme.<details><summary>Hint</summary>Redefine variables inside the media query.</details></div></label>
+      <label class="task"><input type="checkbox"><div><strong>8. Loading spinner</strong><br>Make a spinning circle loader using only CSS keyframes.<details><summary>Hint</summary>A bordered circle with one colored side, animated with rotate(360deg).</details></div></label>
+    </section>
+
+    <div class="pager">
+      <a href="html.html">← HTML</a>
+      <a href="linux.html">Next: Linux / CLI →</a>
+    </div>
+  </main>
+</div>
+<footer class="site">© Ibraheem Syed · CSS notes</footer>
+<script src="notes.js"></script>
+</body>
+</html>
